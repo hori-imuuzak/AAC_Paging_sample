@@ -5,7 +5,6 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import app.imuuzak.aac_paging_sample.data.Owner
 import app.imuuzak.aac_paging_sample.ui.paging.callback.OwnerListBoundaryCallback
-import app.imuuzak.aac_paging_sample.ui.paging.datasource.OwnerDataSource
 import app.imuuzak.aac_paging_sample.ui.paging.factory.OwnerDataSourceFactory
 
 class OwnerListViewModel: ViewModel() {
@@ -17,14 +16,20 @@ class OwnerListViewModel: ViewModel() {
     }
 
     private var _ownerPagedList: LiveData<PagedList<Owner>>
-    private var liveDataSource: LiveData<OwnerDataSource>
-
     val ownerPagedList
         get() = _ownerPagedList
 
     fun image(owner: Owner) = owner.avatarUrl
     fun name(owner: Owner) = owner.login
     fun webUrl(owner: Owner) = owner.htmlUrl
+
+    var uiEvent: UIEvent? = null
+    fun bindEvent(uiEvent: UIEvent) {
+        this.uiEvent = uiEvent
+    }
+    fun onClickOwner(owner: Owner) {
+        uiEvent?.onClickOwner(owner)
+    }
 
     init {
         val dataSourceFactory = OwnerDataSourceFactory(viewModelScope)
@@ -38,6 +43,9 @@ class OwnerListViewModel: ViewModel() {
         _ownerPagedList = LivePagedListBuilder(dataSourceFactory, pagedListConfig)
             .setBoundaryCallback(OwnerListBoundaryCallback())
             .build()
-        liveDataSource = dataSourceFactory.dataSourceLiveData
+    }
+
+    interface UIEvent {
+        fun onClickOwner(owner: Owner)
     }
 }

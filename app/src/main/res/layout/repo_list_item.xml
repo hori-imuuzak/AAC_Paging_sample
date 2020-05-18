@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="owner"
-            type="app.imuuzak.aac_paging_sample.data.Owner" />
+            name="repo"
+            type="app.imuuzak.aac_paging_sample.data.Repo" />
 
         <variable
             name="viewModel"
-            type="app.imuuzak.aac_paging_sample.ui.viewmodel.OwnerListViewModel" />
+            type="app.imuuzak.aac_paging_sample.ui.viewmodel.RepoListViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,7 +19,7 @@
         card_view:cardCornerRadius="6dp"
         card_view:cardElevation="4dp"
         card_view:cardMaxElevation="6dp"
-        android:onClick="@{() -> viewModel.onClickOwner(owner)}"
+        android:onClick="@{() -> viewModel.onClickRepo(repo)}"
         android:focusable="true"
         android:clickable="true">
 
@@ -30,12 +29,6 @@
             android:orientation="horizontal"
             android:background="?attr/selectableItemBackground"
             android:padding="16dp">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:contentDescription="@{viewModel.name(owner)}"
-                bind:src="@{viewModel.image(owner)}" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -47,13 +40,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.name(owner)}" />
+                    android:text="@{viewModel.repoName(repo)}" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@{viewModel.webUrl(owner)}" />
+                    android:text="@{viewModel.repoUrl(repo)}" />
 
             </LinearLayout>
         </LinearLayout>

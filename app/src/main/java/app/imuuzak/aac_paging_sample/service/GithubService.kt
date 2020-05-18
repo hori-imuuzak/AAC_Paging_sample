@@ -33,7 +33,10 @@ class GithubService {
         return githubRepository.getOwners(since, perPage)
     }
 
-    suspend fun getRepos(owner: Owner): List<Repo> {
-        return githubRepository.getRepos(owner.login)
+    suspend fun getRepos(owner: Owner, page: Int, perPage: Int): List<Repo> {
+        if (page < 0) throw IllegalArgumentException("page")
+        if (perPage < 0) throw IllegalArgumentException("perPage")
+
+        return githubRepository.getRepos(owner.login, page, perPage)
     }
 }
